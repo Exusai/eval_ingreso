@@ -245,7 +245,7 @@ class _RegisterState extends State<Register> {
                           '${fechaNacimiento.year}-${fechaNacimiento.month.toString().padLeft(2, '0')}-${fechaNacimiento.day.toString().padLeft(2, '0')}',
                           gender
                           );
-                      setState(() => loading = false);
+                      //setState(() => loading = false);
                     } else {
                       setState(() => error = 'Formato invalido');
                     }
