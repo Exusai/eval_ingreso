@@ -1,12 +1,12 @@
 class Pokemon {
-  final int id;
-  final String name;
-  final String height;
-  final String weight;
-  final String imageUrl;
-  final String types;
-  final String hp;
-  final String attack;
+  int id;
+  String name;
+  String height;
+  String weight;
+  String imageUrl;
+  String types;
+  String hp;
+  String attack;
 
   Pokemon({required this.id, required this.name, required this.height, required this.weight, required this.imageUrl, required this.types, required this.hp, required this.attack});
 

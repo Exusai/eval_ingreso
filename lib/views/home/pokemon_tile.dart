@@ -43,7 +43,7 @@ class PokemonTile extends StatelessWidget {
                       ),
                       color: Colors.black38,
                     ),
-                    child: Text(pokemon.name, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center)
+                    child: Text(pokemon.name, style: const TextStyle(fontSize: 20, color: Colors.white), textAlign: TextAlign.center)
                   ),
                 )
               ],

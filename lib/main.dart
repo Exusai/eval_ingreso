@@ -53,7 +53,11 @@ class _MyAppState extends State<MyApp> {
           ),
           // Define the default font family.
           fontFamily: 'Robotto',
-
+          sliderTheme: const SliderThemeData(
+            trackHeight: 18,
+            inactiveTrackColor: Colors.grey,
+            thumbShape: RoundSliderThumbShape(elevation: 0),
+          ),
           // Define the default TextTheme. Use this to specify the default
           // text styling for headlines, titles, bodies of text, and more.
           textTheme: const TextTheme(

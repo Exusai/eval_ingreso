@@ -1,7 +1,7 @@
+import 'package:eval_ingreso/controllers/overridePokeAPI.dart';
 import 'package:eval_ingreso/models/pokemon.dart';
 import 'package:eval_ingreso/views/home/pokemon_type_container.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PokemonDetail extends StatefulWidget {
   final Pokemon pokemon;
@@ -12,12 +12,20 @@ class PokemonDetail extends StatefulWidget {
 }
 
 class _PokemonDetailState extends State<PokemonDetail> {
-  
+  int attackInt = 0;
+  int hpInt = 0;
+  int heightInt = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    attackInt = int.parse(widget.pokemon.attack);
+    hpInt = int.parse(widget.pokemon.hp);
+    heightInt = int.parse(widget.pokemon.height);
+  }
+
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<Usuario>(context);
-    //Carrito cart = Provider.of<Carrito>(context) ?? {Carrito(productos: [])};
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.pokemon.name.toUpperCase()),
@@ -25,8 +33,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
         elevation: 0,
       ),
       
-      body: Padding(
-        padding: const EdgeInsets.symmetric( horizontal: 0, vertical: 0),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -38,7 +45,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                   end: Alignment.bottomCenter,
                   colors: [
                     pokemonTypeBackGround(widget.pokemon.types),
-                    Color.fromARGB(255, 159, 159, 159),
+                    const Color.fromARGB(255, 170, 170, 170),
                   ],
                 ),
                 //color: pokemonTypeBackGround(widget.pokemon.types),
@@ -62,21 +69,100 @@ class _PokemonDetailState extends State<PokemonDetail> {
               padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 10),
               child: Column(
                 children: [
-                  pokemonStatRow("Pokemon Tipo: ", widget.pokemon.types),
-                  pokemonStatRow("Ataque: ", widget.pokemon.attack),
-                  pokemonStatRow("HP: ", widget.pokemon.hp),
-                  pokemonStatRow("Altura: ", widget.pokemon.height),
-                  pokemonStatRow("Peso: ", widget.pokemon.weight),
                   pokemonStatRow("ID: ", widget.pokemon.id.toString()),
-                  
+                  pokemonStatRow("Pokemon Tipo: ", widget.pokemon.types),
+                  pokemonStatRow("Peso: ", "${double.parse(widget.pokemon.weight)/10} kg"),
+                  const Divider(),
+                  //Atack bar
+                  Column(
+                    children: [
+                      pokemonStatRow("Ataque:", "$attackInt/360"),
+                      Slider(
+                        value: attackInt.toDouble(),
+                        min: 0,
+                        max: 360,
+                        divisions: 360,
+                        label: attackInt.toString(),
+                        activeColor: Colors.amber,
+                        onChanged: (newVal){
+                          setState(() {
+                            attackInt = newVal.toInt();
+                          });
+                        },
+                        onChangeEnd: (val) {
+                          // TODO: push to server
+                          sendChangesToServer(attackInt, hpInt, heightInt);
+                        },
+                      ),
+                    ],
+                  ),
+
+                  //HP bar pokemonSliderBar("HP:", hpInt, Colors.blue),
+                  Column(
+                    children: [
+                      pokemonStatRow("HP:", "$hpInt/360"),
+                      Slider(
+                        value: hpInt.toDouble(),
+                        min: 0,
+                        max: 360,
+                        divisions: 360,
+                        label: hpInt.toString(),
+                        activeColor: Colors.blue,
+                        onChanged: (newVal){
+                          setState(() {
+                            hpInt = newVal.toInt();
+                          });
+                        },
+                        onChangeEnd: (val) {
+                          // TODO: push to server
+                          sendChangesToServer(attackInt, hpInt, heightInt);
+                        },
+                      ),
+                    ],
+                  ),
+
+                  //height bar pokemonSliderBar("Altura:", heightInt, Colors.greenAccent),
+                  Column(
+                    children: [
+                      pokemonStatRow("Altura:", "$heightInt/360"),
+                      Slider(
+                        value: heightInt.toDouble(),
+                        min: 0,
+                        max: 360,
+                        divisions: 360,
+                        label: heightInt.toString(),
+                        activeColor: Colors.greenAccent,
+                        onChanged: (newVal){
+                          setState(() {
+                            heightInt = newVal.toInt();
+                          });
+                        },
+                        onChangeEnd: (val) {
+                          // TODO: push to server
+                          sendChangesToServer(attackInt, hpInt, heightInt);
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const Text("Al mover los sliders, la información automaticamnete se enviará y se guardará en firebase. Los cambios se reflejarán en tiempo real en todos los dispositivos que esten escuchando el stream"),
+                  const SizedBox(height: 20,),
                 ],
               ),
             ),
-
+      
           ],
         ),
       ),
     );
+  }
+
+  void sendChangesToServer(int atk, int hp, int height) async {
+    Pokemon modPokemon = widget.pokemon;
+    modPokemon.attack = atk.toString();
+    modPokemon.hp = hp.toString();
+    modPokemon.height = height.toString();  
+    OverridePokeAPI.modifyPokemon(modPokemon);
   }
 
   Widget pokemonStatRow(String stat, String value){

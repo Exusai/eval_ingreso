@@ -3,7 +3,7 @@ import '../models/pokemon.dart';
 import 'pokeAPI.dart';
 
 class OverridePokeAPI {
-  final CollectionReference pokemonCollection = FirebaseFirestore.instance.collection('Pokemon');
+  static final CollectionReference pokemonCollection = FirebaseFirestore.instance.collection('Pokemon');
   //final PokeAPI pokeAPI = PokeAPI();
 
   // Pokemon from snapshot
@@ -35,7 +35,7 @@ class OverridePokeAPI {
   }
 
   // modify pokemon
-  Future modifyPokemon(Pokemon pokemon) async {
+  static Future modifyPokemon(Pokemon pokemon) async {
     await pokemonCollection.doc(pokemon.id.toString()).update({
       'name': pokemon.name,
       'height': pokemon.height,
@@ -84,11 +84,14 @@ class OverridePokeAPI {
   // pokemon from query snapshot
   List<Pokemon> _pokemonFromQuerySnapshot(QuerySnapshot snapshot) {
     // for each 
-    return snapshot.docs.map((DocumentSnapshot doc) {
+    List<Pokemon> listOfPokemons = snapshot.docs.map((DocumentSnapshot doc) {
       //print(doc.get('name'));
       return _pokemonFromSnapshot(doc);
     }).toList();
     
+    // sort list by id
+    listOfPokemons.sort((a, b) => a.id.compareTo(b.id));
+    return listOfPokemons;
   }
 
 }
