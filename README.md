@@ -1,5 +1,5 @@
 # eval_ingreso
-Se utiliza información de la (PokeAPI)[https://pokeapi.co] por que es relativamente fácil de usar. Se puden modificar la información de la API, pero para esto la información se copia en Firebase. Al principio planteba solo guardar los pokemon cuya información se hubiese modificado, pero esto añadía mucha compljidad, así que cuando la app inicia y no hay información en firebase se copia alguna de la información de los primeros 100 pokemon y se guarda en firebase, en caso de si haber información en firebase, se usa esa.
+Se utiliza información de la [PokeAPI](https://pokeapi.co) por que es relativamente fácil de usar. Se puden modificar la información de la API, pero para esto la información se copia en Firebase. Al principio planteba solo guardar los pokemon cuya información se hubiese modificado, pero esto añadía mucha compljidad, así que cuando la app inicia y no hay información en firebase se copia alguna de la información de los primeros 100 pokemon y se guarda en firebase, en caso de si haber información en firebase, se usa esa.
 
 Así mismo se pueden crear usuarios con correo electronico o se puede iniciar sesión de forma anonima. Los usuarios registrados pueden modificar su información y todos los usuaios independientemente de que esten resgitrados o no pueden modificar la infomación de los pokeon.
 
