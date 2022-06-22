@@ -34,7 +34,8 @@ class _MyAppState extends State<MyApp> {
           initialData: const [],
           create: (context) => OverridePokeAPI().getPokemonsAsStream,
           catchError: (context, error) {
-            //print(error);
+            // En caso de error firebase quizás este vacio entonces copiar pokeapi
+            OverridePokeAPI().getPokemons();
             return const [];
           },
         ),
