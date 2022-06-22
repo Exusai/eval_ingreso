@@ -3,14 +3,15 @@ Se utiliza información de la [PokeAPI](https://pokeapi.co) por que es relativam
 
 Así mismo se pueden crear usuarios con correo electronico o se puede iniciar sesión de forma anonima. Los usuarios registrados pueden modificar su información y todos los usuaios independientemente de que esten resgitrados o no pueden modificar la infomación de los pokeon.
 
-Creación de usuario:
+El fondo de los pokemon cambia dependiendo de su tipo.
 
+Creación de usuario:
 
 https://user-images.githubusercontent.com/47704357/175080039-ecd7fa55-038d-4765-987c-6a3b9d3094fc.mp4
 
 
 Demo de APP:
 
-
 https://user-images.githubusercontent.com/47704357/175080168-ca4fe9c5-b4c5-4073-bd6a-66ca2c3f4d36.mp4
 
+Capturas:
