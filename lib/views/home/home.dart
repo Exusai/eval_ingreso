@@ -1,6 +1,5 @@
 import 'package:eval_ingreso/controllers/database.dart';
-import 'package:eval_ingreso/controllers/overridePokeAPI.dart';
-import 'package:eval_ingreso/models/pokemon.dart';
+import 'package:eval_ingreso/views/home/edit_user_info.dart';
 import 'package:eval_ingreso/views/home/pokemonList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Usuario?>(context); // provedor de usuario
-    final userData = Provider.of<UserData?>(context); // provedor de usuario
+    //final userData = Provider.of<UserData?>(context); // provedor de usuario
     final db = DatabaseService(uid: user!.uid);
 
     return Scaffold(
@@ -64,14 +63,36 @@ class _HomePageState extends State<HomePage> {
         future: db?.getUserData(),
         builder: (context, snapshot) {
           if (snapshot.hasData){
-            return Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Usted ha ingresado como: ${snapshot.data!.nombre} ${snapshot.data!.apellidoPaterno} ${snapshot.data!.apellidoMaterno}'),
-                Text('Correo: ${snapshot.data!.correo}'),
-                Text('Fecha de nacimiento: ${snapshot.data!.fechaNacimiento.year.toString()}-${snapshot.data!.fechaNacimiento.month.toString()}'),
-                Text('Género: ${snapshot.data!.gender}'),
+                Column(
+                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Bienvenido ${snapshot.data!.nombre} ${snapshot.data!.apellidoPaterno} ${snapshot.data!.apellidoMaterno}'),
+                    Text('Correo: ${snapshot.data!.correo}'),
+                    Text('Fecha de nacimiento: ${snapshot.data!.fechaNacimiento.year.toString()}-${snapshot.data!.fechaNacimiento.month.toString()}'),
+                    Text('Género: ${snapshot.data!.gender}'),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: (){
+                    // push to edit info
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EditInfo(),
+                      ),
+                    );
+                  }, 
+                  child: Column(
+                    children: const [
+                      Icon(Icons.settings),
+                      Text('Editar info'),
+                    ],
+                  )
+                )
               ],
             );
           } else {

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eval_ingreso/models/pokemon.dart';
 import 'package:eval_ingreso/models/user.dart';
 
 class DatabaseService {
@@ -11,6 +10,8 @@ class DatabaseService {
   
   //UserInfo from snapshot
   UserData _userFromSnapshot(DocumentSnapshot snapshot) {
+    print('User Snapshot');
+    print(snapshot.data());
     return UserData(
       uid:                uid,
       nombre:             snapshot.get('Nombre') ?? '',
@@ -25,6 +26,7 @@ class DatabaseService {
   //Subir/Actualizar colecciones en la base datos
   //actualizar/subir info del usuario
   Future updateUserData(String nombre, String apellidoPaterno, String apellidoMaterno, String correo, String fechaNacimiento, String gender) async{
+    //print('modificando');
     return await userCollection.doc(uid).set({
       'Nombre': nombre,
       'ApellidoPaterno': apellidoPaterno,
@@ -37,7 +39,7 @@ class DatabaseService {
 
   // Streams
   //get user Stream
-  Stream<UserData> get userData {
+  Stream<UserData?> get userData {
     return userCollection.doc(uid).snapshots().map(_userFromSnapshot);
   }
 

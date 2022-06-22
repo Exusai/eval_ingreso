@@ -242,7 +242,7 @@ class _RegisterState extends State<Register> {
                           apellidoPaterno,
                           apellidoMaterno,
                           email,
-                          '${fechaNacimiento.year}-${fechaNacimiento.month}-${fechaNacimiento.day}',
+                          '${fechaNacimiento.year}-${fechaNacimiento.month.toString().padLeft(2, '0')}-${fechaNacimiento.day.toString().padLeft(2, '0')}',
                           gender
                           );
                       setState(() => loading = false);
@@ -261,10 +261,10 @@ class _RegisterState extends State<Register> {
                     dynamic result = await _auth.singInAnon();
                     if (result == null) {
                       setState(() => loading = false);
-                      print('error singing in');
+                      //print('error singing in');
                     } else {
-                      print('singed');
-                      print(result.uid);
+                      //print('singed');
+                      //print(result.uid);
                     }
                   },
                 ),
